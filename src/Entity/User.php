@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User
@@ -17,6 +18,8 @@ class User
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "L'email ne peut pas être vide.")]
+    #[Assert\Email(message: "L'email '{{ value }}' n'est pas un email valide.")]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
@@ -26,9 +29,23 @@ class User
     private array $roles = [];
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le nom d'user ne peut pas être vide.")]
+    #[Assert\Length(
+        min: 3,
+        max: 50,
+        minMessage: "Le nom d'user doit contenir au moins {{ limit }} caractères.",
+        maxMessage: "Le nom d'user ne peut pas dépasser {{ limit }} caractères."
+    )]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le nom d'user ne peut pas être vide.")]
+    #[Assert\Length(
+        min: 3,
+        max: 50,
+        minMessage: "Le nom d'user doit contenir au moins {{ limit }} caractères.",
+        maxMessage: "Le nom d'user ne peut pas dépasser {{ limit }} caractères."
+    )]
     private ?string $lastName = null;
 
     #[ORM\Column]
