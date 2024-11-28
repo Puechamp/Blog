@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{% block body %}
+<h1>Bienvenue, {{ user.firstName }} {{ user.lastName }}</h1>
+
+<ul>
+    <li>Email : {{ user.email }}</li>
+    <li>Date d'inscription : {{ user.createdAt|date('d-m-Y') }}</li>
+</ul>
+
+<a href="{{ path('app_logout') }}" class="btn btn-danger">Déconnexion</a>
+{% endblock %}

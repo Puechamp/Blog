@@ -48,7 +48,7 @@ class RegistrationController extends AbstractController
             $formView = $form->createView();
             $this->addFlash('success', 'Inscription réussie. Vous pouvez maintenant vous connecter.');
 
-            return $this->redirectToRoute('http://127.0.0.1:8000/main');
+            return $this->redirectToRoute('app_profile');
         }
 
         return $this->render('registration/index.html.twig', [
