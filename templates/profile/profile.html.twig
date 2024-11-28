@@ -10,5 +10,6 @@
     <li>Date d'inscription : {{ user.createdAt|date('d-m-Y') }}</li>
 </ul>
 
+<a href="{{ path('posts_create') }}" class="btn btn-primary">Créer un article</a>
 <a href="{{ path('app_logout') }}" class="btn btn-danger">Déconnexion</a>
 {% endblock %}

@@ -18,7 +18,7 @@ class PostController extends AbstractController
     {
         $posts = $entityManager->getRepository(Post::class)->findAll();
 
-        return $this->render('posts/index.html.twig', [
+        return $this->render('post/index.html.twig', [
             'posts' => $posts,
         ]);
     }
@@ -26,11 +26,15 @@ class PostController extends AbstractController
     #[Route('/create', name: 'create')]
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
+         // Vérifie que l'utilisateur est connecté
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $post->setUser($this->getUser());// Associe l'utilisateur connecté comme auteur de l'article
             $entityManager->persist($post);
             $entityManager->flush();
 
@@ -38,7 +42,7 @@ class PostController extends AbstractController
             return $this->redirectToRoute('posts_index');
         }
 
-        return $this->render('posts/create.html.twig', [
+        return $this->render('post/create.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -56,7 +60,7 @@ class PostController extends AbstractController
             return $this->redirectToRoute('posts_index');
         }
 
-        return $this->render('posts/edit.html.twig', [
+        return $this->render('post/edit.html.twig', [
             'form' => $form->createView(),
             'post' => $post,
         ]);

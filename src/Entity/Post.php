@@ -158,4 +158,16 @@ class Post
 
         return $this;
     }
+
+    public function getAuthor(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->user = $author;
+
+        return $this;
+    }
 }
