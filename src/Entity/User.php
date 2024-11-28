@@ -55,9 +55,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $lastName = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
-
     /**
      * @var Collection<int, Post>
      */
@@ -70,10 +67,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'user')]
     private Collection $comment;
 
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
+    private ?\DateTimeImmutable $createdAt = null;
+
     public function __construct()
     {
         $this->post = new ArrayCollection();
         $this->comment = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -148,18 +149,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Post>
      */
@@ -220,7 +209,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    
+
     public function getUserIdentifier(): string
     {
         return $this->email;
@@ -228,11 +217,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getSalt(): ?string
     {
-        return null; 
+        return null;
     }
 
-    public function eraseCredentials(): void
+    public function eraseCredentials(): void {}
+
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+        return $this;
     }
 }
