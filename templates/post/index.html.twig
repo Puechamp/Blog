@@ -1,21 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des articles{% endblock %}
+{% block title %}Liste des articles
+{% endblock %}
 
 {% block body %}
-<h1>Liste des articles</h1>
+{% block content %}
+	<h1>Liste des articles</h1>
 
-{% if posts is empty %}
-    <p>Aucun article n'a été trouvé.</p>
-{% else %}
-    <ul class="list-group">
-        {% for post in posts %}
-            <li class="list-group-item">
-                <h2>{{ post.title }}</h2>
-                <p>{{ post.content|slice(0, 100) }}...</p>
-                <a href="#" class="btn btn-link">Lire la suite</a>
-            </li>
-        {% endfor %}
-    </ul>
-{% endif %}
+	{% if posts is empty %}
+		<p>Aucun article n'a été trouvé.</p>
+	{% else %}
+		<ul class="list-group">
+			{% for post in posts %}
+				<li class="list-group-item">
+					<h2>{{ post.title }}</h2>
+					<p>{{ post.content|slice(0, 100) }}...</p>
+					<a href="#" class="btn btn-link">Lire la suite</a>
+				</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+	{% endblock %}
 {% endblock %}
